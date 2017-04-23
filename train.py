@@ -640,12 +640,8 @@ def main(argv = None):
                 file_name = 'weight_crate'+ str(iter_cnt+1)+'.pkl'
                 save_pkl_model(weights, biases, parent_dir, file_name)
 
-                keys = ['cov1','cov2','fc1','fc2','fc3']
-                masks_val = {}
-                for key in keys:
-                    masks_val[key] = weights_mask[key].eval()
                 with open(parent_dir + 'mask_crate' + str(iter_cnt + 1) + '.pkl','wb') as f:
-                    pickle.dump(masks_val,f)
+                    pickle.dump(weights_mask,f)
 
             if (TRAIN):
                 file_name = 'weight_crate'+ str(iter_cnt)+'.pkl'
