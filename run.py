@@ -35,10 +35,10 @@ while (crates['fc1'] < 3.5):
     parent_dir = './assets/' + 'cr' + 'fc1v' + str(int(crates['fc1']*100)) + '/'
     if not os.path.exists(parent_dir):
         os.makedirs(parent_dir)
-        src_dir = prev_parent_dir+'weight_crate'+str(count)+'.pkl'
+        src_dir = prev_parent_dir+'weight_crate'+str(iter_cnt)+'.pkl'
         dest_dir = parent_dir + 'weight_crate0.pkl'
         copyfile(src_dir,dest_dir)
-        src_dir = prev_parent_dir+'mask_crate'+str(count)+'.pkl'
+        src_dir = prev_parent_dir+'mask_crate'+str(iter_cnt)+'.pkl'
         dest_dir = parent_dir + 'mask_crate0.pkl'
         copyfile(src_dir,dest_dir)
     count = 0
@@ -74,7 +74,6 @@ while (crates['fc1'] < 3.5):
             _ = train.main(param)
 
             # TEST
-
             param = [
                 ('-first_time', False),
                 ('-train', False),
@@ -91,10 +90,38 @@ while (crates['fc1'] < 3.5):
                 lr = 1e-4
                 retrain = 0
                 acc_list.append((crates,acc))
+                param = [
+                    ('-first_time', False),
+                    ('-train', False),
+                    ('-prune', False),
+                    ('-lr', lr),
+                    ('-with_biases', with_biases),
+                    ('-parent_dir', parent_dir),
+                    ('-iter_cnt',iter_cnt),
+                    ('-cRates',crates),
+                    ('-save', True)
+                    ]
+                _ = train.main(param)
                 break
             else:
                 retrain = retrain + 1
-        iter_cnt = iter_cnt + 1
+                if (retrain == 10):
+                    param = [
+                        ('-first_time', False),
+                        ('-train', False),
+                        ('-prune', False),
+                        ('-lr', lr),
+                        ('-with_biases', with_biases),
+                        ('-parent_dir', parent_dir),
+                        ('-iter_cnt',iter_cnt),
+                        ('-cRates',crates),
+                        ('-save', True)
+                        ]
+                    _ = train.main(param)
+        if (acc > 0.823):
+            break
+        else:
+            iter_cnt = iter_cnt + 1
     print('accuracy summary: {}'.format(acc_list))
     print (acc)
 

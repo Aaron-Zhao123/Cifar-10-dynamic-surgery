@@ -465,6 +465,8 @@ def main(argv = None):
                     cRates = val
                 if (opt == '-iter_cnt'):
                     iter_cnt = val
+                if (opt == '-save'):
+                    next_iter_save = val
 
 
             print('pruning thresholds are {}'.format(prune_thresholds))
@@ -632,6 +634,18 @@ def main(argv = None):
                                     y: labels_test,
                                     keep_prob: 1.0})
             print("test accuracy is {}".format(test_acc))
+            if (next_iter_save):
+                print('saving for the next iteration of dynamic surgery')
+                file_name = 'weight_crate'+ str(iter_cnt+1)+'.pkl'
+                save_pkl_model(weights, biases, parent_dir, file_name)
+
+                keys = ['cov1','cov2','fc1','fc2','fc3']
+                masks_val = {}
+                for key in keys:
+                    masks_val[key] = weights_mask[key].eval()
+                with open(parent_dir + 'mask_crate' + str(iter_cnt + 1) + '.pkl','wb') as f:
+                    pickle.dump(masks_val,f)
+
             if (TRAIN):
                 file_name = 'weight_crate'+ str(iter_cnt)+'.pkl'
                 save_pkl_model(weights, biases, parent_dir, file_name)
