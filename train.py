@@ -430,6 +430,7 @@ def main(argv = None):
             keys = ['cov1', 'cov2', 'fc1', 'fc2', 'fc3']
             prune_thresholds = {}
             WITH_BIASES = False
+            next_iter_save = False
             for key in keys:
                 prune_thresholds[key] = 0.
 
