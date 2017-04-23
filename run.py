@@ -86,7 +86,6 @@ while (crates['fc1'] < 3.5):
                 ('-cRates',crates)
                 ]
             acc = train.main(param)
-            hist.append((pcov, pfc, acc))
             # pcov[1] = pcov[1] + 10.
             if (acc > 0.823):
                 lr = 1e-4
