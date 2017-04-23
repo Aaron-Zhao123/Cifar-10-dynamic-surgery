@@ -90,7 +90,7 @@ while (crates['fc1'] < 3.5):
             if (acc > 0.823):
                 lr = 1e-4
                 retrain = 0
-                acc_list.append((pcov,pfc,acc))
+                acc_list.append((crates,acc))
                 break
             else:
                 retrain = retrain + 1
