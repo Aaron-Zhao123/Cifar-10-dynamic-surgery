@@ -71,7 +71,7 @@ while (crates['fc1'] < 3.5):
                 ('-iter_cnt',iter_cnt),
                 ('-cRates',crates)
                 ]
-            _ = train.main(param)
+            # _ = train.main(param)
 
             # TEST
             param = [
