@@ -119,9 +119,11 @@ while (crates['fc1'] < 3.5):
                         ]
                     _ = train.main(param)
         if (acc > 0.823):
+            crates['fc1'] = crates['fc1'] + .2
             break
         else:
             iter_cnt = iter_cnt + 1
+    crates['fc1'] = crates['fc1'] + .2
     print('accuracy summary: {}'.format(acc_list))
     print (acc)
 
