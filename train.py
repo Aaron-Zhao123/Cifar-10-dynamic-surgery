@@ -96,7 +96,6 @@ def initialize_variables(exist, file_name):
 def prune_weights(prune_thresholds, weights, biases, org_masks, cRates, iter_cnt, parent_dir):
     keys = ['cov1','cov2','fc1','fc2','fc3']
     new_mask = {}
-    biases_vals = {}
     for key in keys:
         w_eval = weights[key].eval()
         threshold_off = 0.9*(np.mean(w_eval) + cRates[key] * np.std(w_eval))
@@ -106,7 +105,6 @@ def prune_weights(prune_thresholds, weights, biases, org_masks, cRates, iter_cnt
         # elements at this postion becomes ones
         mask_on = np.abs(w_eval) > threshold_on
         new_mask[key] = np.logical_or(((1 - mask_off) * org_masks[key]),mask_on).astype(int)
-        biases_vals[key] = biases[key].eval()
     mask_file_name = parent_dir + 'mask_crate'+ str(iter_cnt)+'.pkl'
     print("training done, save a mask file at "  + mask_file_name)
     with open(mask_file_name, 'wb') as f:
