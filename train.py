@@ -109,7 +109,7 @@ def prune_weights(prune_thresholds, weights, biases, org_masks, cRates, iter_cnt
     print("training done, save a mask file at "  + mask_file_name)
     with open(mask_file_name, 'wb') as f:
         pickle.dump(new_mask, f)
-    mask_info(new_mask, biases_vals)
+    # mask_info(new_mask, biases_vals)
 
 
 def initialize_weights_mask(first_time_training, mask_dir, file_name):
