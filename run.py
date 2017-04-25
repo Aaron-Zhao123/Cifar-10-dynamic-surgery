@@ -30,7 +30,8 @@ retrain_cnt = 0
 roundrobin = 0
 with_biases = False
 prev_parent_dir = './assets/' + 'cr' + 'fc1v' + str(int(crates['fc1']*100)) + '/'
-crates['fc1'] = crates['fc1'] + 1.
+parent_dir = './assets/' + 'cr' + 'fc1v' + str(int(crates['fc1']*100)) + '/'
+crates['fc1'] = crates['fc1'] + 0.2
 # Prune
 while (crates['fc1'] < 3.5):
     prev_parent_dir = parent_dir
