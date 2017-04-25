@@ -7,7 +7,7 @@ def compute_file_name(pcov, pfc):
     name = ''
     name += 'cov' + str(int(pcov[0] * 10))
     name += 'cov' + str(int(pcov[1] * 10))
-    name += 'fc' + str(int(pfc[0] * 10))
+    name += 'fc' + str(int(round(pfc[0] * 10)))
     name += 'fc' + str(int(pfc[1] * 10))
     name += 'fc' + str(int(pfc[2] * 10))
     return name
@@ -21,10 +21,11 @@ lr = 1e-4
 crates = {
     'cov1': 0.,
     'cov2': 0.,
-    'fc1': 0.,
+    'fc1': 1.6.,
     'fc2': 0.,
     'fc3': 0.
 }
+iter_cnt = 1
 retrain_cnt = 0
 roundrobin = 0
 with_biases = False
