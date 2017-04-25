@@ -32,6 +32,7 @@ prev_parent_dir = './assets/' + 'cr' + 'fc1v' + str(int(crates['fc1']*100)) + '/
 crates['fc1'] = crates['fc1'] + 1.
 # Prune
 while (crates['fc1'] < 3.5):
+    prev_parent_dir = parent_dir
     parent_dir = './assets/' + 'cr' + 'fc1v' + str(int(crates['fc1']*100)) + '/'
     if not os.path.exists(parent_dir):
         os.makedirs(parent_dir)
@@ -123,6 +124,8 @@ while (crates['fc1'] < 3.5):
         else:
             iter_cnt = iter_cnt + 1
     crates['fc1'] = crates['fc1'] + .2
+    if (iter_cnt > 7):
+        iter_cnt = iter_cnt - 1
     print('accuracy summary: {}'.format(acc_list))
     print (acc)
 
