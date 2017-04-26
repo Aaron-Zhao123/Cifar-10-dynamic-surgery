@@ -21,7 +21,7 @@ lr = 1e-4
 crates = {
     'cov1': 0.,
     'cov2': 0.,
-    'fc1': 1.6,
+    'fc1': 2.0,
     'fc2': 0.,
     'fc3': 0.
 }
@@ -31,7 +31,7 @@ roundrobin = 0
 with_biases = False
 prev_parent_dir = './assets/' + 'cr' + 'fc1v' + str(int(crates['fc1']*100)) + '/'
 parent_dir = './assets/' + 'cr' + 'fc1v' + str(int(crates['fc1']*100)) + '/'
-crates['fc1'] = crates['fc1'] + 0.2
+crates['fc1'] = crates['fc1'] + 0.1
 # Prune
 while (crates['fc1'] < 3.5):
     prev_parent_dir = parent_dir
