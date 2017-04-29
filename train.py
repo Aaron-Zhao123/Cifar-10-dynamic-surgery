@@ -411,9 +411,9 @@ def compute_file_name(thresholds):
     keys_fc = ['fc1', 'fc2', 'fc3']
     name = ''
     for key in keys_cov:
-        name += 'cov'+ str(int(thresholds[key]*10))
+        name += 'cov'+ str(int(round(thresholds[key]*10)))
     for key in keys_fc:
-        name += 'fc'+ str(int(thresholds[key]*10))
+        name += 'fc'+ str(int(round(thresholds[key]*10)))
     return name
 
 
@@ -495,8 +495,8 @@ def main(argv = None):
         # model_name = 'test.pkl'
         # model_name = '../tf_official_docker/tmp.pkl'
 
-
-        (weights_mask,biases_mask)= initialize_weights_mask(first_time_load, mask_dir, 'mask_crate'+ str(iter_cnt) + '.pkl')
+        file_name_part = compute_file_name(cRates)
+        (weights_mask,biases_mask)= initialize_weights_mask(first_time_load, mask_dir, 'mask_crate'+ file_name_part + '.pkl')
         cifar10.maybe_download_and_extract()
         class_names = cifar10.load_class_names()
 
@@ -522,8 +522,9 @@ def main(argv = None):
         else:
             PREV_MODEL_EXIST = 1
             weights_dir = parent_dir
+            file_name_part = compute_file_name(cRates)
             weights, biases = initialize_variables( PREV_MODEL_EXIST,
-                                                    parent_dir + 'weight_crate' + str(iter_cnt) + '.pkl')
+                                                    parent_dir + 'weight_crate' + file_name_part + '.pkl')
 
         x = tf.placeholder(tf.float32, [None, 32, 32, 3])
         y = tf.placeholder(tf.float32, [None, NUM_CLASSES])
@@ -538,8 +539,6 @@ def main(argv = None):
 
         correct_prediction = tf.equal(tf.argmax(pred,1), tf.argmax(y,1))
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
-        saver = tf.train.Saver()
 
 
         global_step = tf.contrib.framework.get_or_create_global_step()
@@ -611,7 +610,8 @@ def main(argv = None):
                         # accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:4]))
                         if (i%(DISPLAY_FREQ*50) == 0 and i != 0 ):
                             train_acc_list.append(train_acc)
-                            file_name = 'weight_crate'+ str(iter_cnt)+'.pkl'
+                            file_name_part = compute_file_name(cRates)
+                            file_name = 'weight_crate'+ str(file_name_part)+'.pkl'
                             save_pkl_model(weights, biases, parent_dir, file_name)
                             print("saved the network")
                         if (np.mean(accuracy_list) > 0.81 and train_acc >= 0.85):
@@ -635,20 +635,24 @@ def main(argv = None):
             print("test accuracy is {}".format(test_acc))
             if (next_iter_save):
                 print('saving for the next iteration of dynamic surgery')
-                file_name = 'weight_crate'+ str(iter_cnt+1)+'.pkl'
+                file_name_part = compute_file_name(cRates)
+                file_name = 'weight_crate'+ file_name_part+'.pkl'
                 save_pkl_model(weights, biases, parent_dir, file_name)
 
-                with open(parent_dir + 'mask_crate' + str(iter_cnt + 1) + '.pkl','wb') as f:
+                file_name_part = compute_file_name(cRates)
+                with open(parent_dir + 'mask_crate' + file_name_part + '.pkl','wb') as f:
                     pickle.dump(weights_mask,f)
 
             if (TRAIN):
-                file_name = 'weight_crate'+ str(iter_cnt)+'.pkl'
+                file_name_part = compute_file_name(cRates)
+                file_name = 'weight_crate'+file_name_part +'.pkl'
                 save_pkl_model(weights, biases, parent_dir, file_name)
                 with open(parent_dir + 'training_data'+file_name+'.pkl', 'wb') as f:
                     pickle.dump(train_acc_list, f)
 
             if (PRUNE):
                 print('saving pruned model ...')
+                file_name_part = compute_file_name(cRates)
                 prune_weights(  prune_thresholds,
                                 weights,
                                 biases,
@@ -656,7 +660,7 @@ def main(argv = None):
                                 cRates,
                                 iter_cnt,
                                 parent_dir)
-                file_name = 'weight_crate'+ str(iter_cnt)+'.pkl'
+                file_name = 'weight_crate'+ file_name_part+'.pkl'
                 print('saving pruned network')
                 save_pkl_model(weights, biases, parent_dir, file_name)
 
