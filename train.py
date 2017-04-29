@@ -661,7 +661,6 @@ def main(argv = None):
                                 cRates,
                                 iter_cnt,
                                 parent_dir)
-                sys.exit()
                 file_name = 'weight_crate'+ file_name_part+'.pkl'
                 print('saving pruned network')
                 save_pkl_model(weights, biases, parent_dir, file_name)
