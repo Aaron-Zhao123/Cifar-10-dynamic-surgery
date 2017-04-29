@@ -30,7 +30,6 @@ retrain_cnt = 0
 roundrobin = 0
 with_biases = False
 parent_dir = './assets/'
-crates['fc1'] = crates['fc1'] + 0.5
 # Prune
 while (crates['fc1'] < 3.5):
     count = 0
