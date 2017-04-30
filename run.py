@@ -83,6 +83,7 @@ while (crates['fc1'] < 3.5):
             else:
                 retrain = retrain + 1
         if (acc > 0.823 or iter_cnt == 7):
+            file_name = compute_file_name(crates)
             crates['fc1'] = crates['fc1'] + 0.5
             acc_list.append((crates,acc))
             param = [
@@ -94,7 +95,8 @@ while (crates['fc1'] < 3.5):
                 ('-parent_dir', parent_dir),
                 ('-iter_cnt',iter_cnt),
                 ('-cRates',crates),
-                ('-save', True)
+                ('-save', True),
+                ('-org_file_name', file_name)
                 ]
             _ = train.main(param)
             break
