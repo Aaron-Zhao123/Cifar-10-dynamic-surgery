@@ -5,11 +5,11 @@ from shutil import copyfile
 
 def compute_file_name(p):
     name = ''
-    name += 'cov' + str(int(p[0] * 10))
-    name += 'cov' + str(int(p[1] * 10))
-    name += 'fc' + str(int(round(p[0] * 10)))
-    name += 'fc' + str(int(p[1] * 10))
-    name += 'fc' + str(int(p[2] * 10))
+    name += 'cov' + str(int(p['cov1'] * 10))
+    name += 'cov' + str(int(p['cov2'] * 10))
+    name += 'fc' + str(int(round(p['fc1'] * 10)))
+    name += 'fc' + str(int(p['fc2'] * 10))
+    name += 'fc' + str(int(p['fc3'] * 10))
     return name
 
 acc_list = []
