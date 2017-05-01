@@ -25,7 +25,8 @@ crates = {
     'fc2': 0.,
     'fc3': 0.
 }
-parent_dir = 'assets/' + compute_file_name(crates)
+file_name_part = compute_file_name(crates)
+parent_dir = 'assets/' + file_name_part
 iter_cnt = 1
 retrain_cnt = 0
 roundrobin = 0
