@@ -31,8 +31,6 @@ iter_cnt = 1
 retrain_cnt = 0
 roundrobin = 0
 with_biases = False
-f_name = compute_file_name()
-parent_dir = './assets/' + 'cr' + 'fc1v' + str(int(crates['fc1']*100)) + '/'
 iter_cnt = 0
 # TEST
 param = [
