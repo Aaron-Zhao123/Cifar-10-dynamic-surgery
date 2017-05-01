@@ -26,7 +26,7 @@ crates = {
     'fc3': 0.
 }
 file_name_part = compute_file_name(crates)
-parent_dir = 'assets/' + file_name_part
+parent_dir = 'assets/'
 iter_cnt = 1
 retrain_cnt = 0
 roundrobin = 0
