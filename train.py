@@ -382,7 +382,7 @@ def pre_process(images, training):
     images = tf.map_fn(lambda image: pre_process_image(image, training), images)
     return images
 
-def mask_gradients(weights, grads_and_names, weight_masks, biases, biases_mask, WITH_BIASES):
+def mask_gradients(weights, grads_and_names, weight_masks, biases, biases_mask):
     new_grads = []
     keys = ['cov1', 'cov2', 'fc1', 'fc2', 'fc3']
     for grad,var_name in grads_and_names:
@@ -393,10 +393,10 @@ def mask_gradients(weights, grads_and_names, weight_masks, biases, biases_mask, 
                 mask = weight_masks[key]
                 new_grads.append((tf.multiply(tf.constant(mask, dtype = tf.float32),grad),var_name))
                 flag = 1
-            if (biases[key]== var_name and WITH_BIASES == True):
-                mask = biases_mask[key]
-                new_grads.append((tf.multiply(tf.constant(mask, dtype = tf.float32),grad),var_name))
-                flag = 1
+            # if (biases[key]== var_name and WITH_BIASES == True):
+            #     mask = biases_mask[key]
+            #     new_grads.append((tf.multiply(tf.constant(mask, dtype = tf.float32),grad),var_name))
+            #     flag = 1
         # if flag is not set
         if (flag == 0):
             new_grads.append((grad,var_name))
@@ -541,6 +541,11 @@ def main(argv = None):
 
         keep_prob = tf.placeholder(tf.float32)
         images = pre_process(x, TRAIN)
+        weights_new = {}
+        keys = ['cov1', 'cov2', 'fc1', 'fc2', 'fc3']
+
+        for key in keys:
+            weights_new[key] = weights[key] * tf.constant(weights_mask[key], dtype=tf.float32)
 
         pred = cov_network(images, weights, biases, keep_prob)
         cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits = pred, labels = y)
@@ -566,7 +571,7 @@ def main(argv = None):
         # opt = tf.train.AdamOptimizer(lr)
         grads = opt.compute_gradients(loss_value)
         org_grads = [(ClipIfNotNone(grad), var) for grad, var in grads]
-        new_grads = mask_gradients(weights, org_grads, weights_mask, biases, biases_mask, WITH_BIASES)
+        new_grads = mask_gradients(weights, org_grads, weights_mask, biases, biases_mask)
 
         # Apply gradients.
         train_step = opt.apply_gradients(new_grads, global_step=global_step)
@@ -584,12 +589,11 @@ def main(argv = None):
         # gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.333)
         with tf.Session() as sess:
             sess.run(init)
-            keys = ['cov1', 'cov2', 'fc1', 'fc2', 'fc3']
-            for key in keys:
-                sess.run(weights[key].assign(weights[key].eval()*weights_mask[key]))
-                if (WITH_BIASES == True):
-                    print("Pruning biases as well")
-                    sess.run(biases[key].assign(biases[key].eval()*biases_mask[key]))
+            # for key in keys:
+            #     sess.run(weights[key].assign(weights[key].eval()*weights_mask[key]))
+            #     if (WITH_BIASES == True):
+            #         print("Pruning biases as well")
+            #         sess.run(biases[key].assign(biases[key].eval()*biases_mask[key]))
 
             print('pre train pruning info')
             prune_info(weights, 0)

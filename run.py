@@ -28,7 +28,6 @@ crates = {
 iter_cnt = 1
 retrain_cnt = 0
 roundrobin = 0
-with_biases = False
 parent_dir = './assets/'
 # Prune
 while (crates['fc1'] < 2.):
@@ -41,7 +40,6 @@ while (crates['fc1'] < 2.):
             ('-train', False),
             ('-prune', True),
             ('-lr', lr),
-            ('-with_biases', with_biases),
             ('-parent_dir', parent_dir),
             ('-iter_cnt',iter_cnt),
             ('-cRates',crates)
@@ -62,7 +60,6 @@ while (crates['fc1'] < 2.):
                 ('-train', True),
                 ('-prune', False),
                 ('-lr', lr),
-                ('-with_biases', with_biases),
                 ('-parent_dir', parent_dir),
                 ('-iter_cnt',iter_cnt),
                 ('-cRates',crates)
@@ -75,7 +72,6 @@ while (crates['fc1'] < 2.):
                 ('-train', False),
                 ('-prune', False),
                 ('-lr', lr),
-                ('-with_biases', with_biases),
                 ('-parent_dir', parent_dir),
                 ('-iter_cnt',iter_cnt),
                 ('-cRates',crates)
@@ -98,7 +94,6 @@ while (crates['fc1'] < 2.):
                 ('-train', False),
                 ('-prune', False),
                 ('-lr', lr),
-                ('-with_biases', with_biases),
                 ('-parent_dir', parent_dir),
                 ('-iter_cnt',iter_cnt),
                 ('-cRates',crates),
