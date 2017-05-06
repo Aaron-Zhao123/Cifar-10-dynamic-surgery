@@ -604,6 +604,7 @@ def main(argv = None):
                             save_pkl_model(weights, biases, parent_dir, file_name)
                             print("saved the network")
                         if (np.mean(accuracy_list) > 0.81 and train_acc >= 0.82):
+                            prune_info(weights_new, 0)
                             print(accuracy_list)
                             accuracy_list = np.zeros(20)
                             test_acc = sess.run(accuracy, feed_dict = {
@@ -611,8 +612,6 @@ def main(argv = None):
                                                     y: labels_test,
                                                     keep_prob: 1.0})
                             print(test_acc)
-                        # if (np.mean(train_acc) > 0.5):
-                            # if (np.mean(accuracy_list) > 0.81 and train_acc >= 0.82 and test_acc > 0.823):
                             if (test_acc > 0.823):
                                 print("training accuracy is large, show the list: {}".format(accuracy_list))
                                 break
