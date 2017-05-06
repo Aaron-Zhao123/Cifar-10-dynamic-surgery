@@ -87,7 +87,7 @@ while (crates['fc1'] < 2.):
         if (acc > 0.823 or iter_cnt == 7):
             file_name = compute_file_name(crates)
             # crates['cov2'] = crates['cov2'] + 0.5
-            crates['fc2'] = crates['fc1'] + 0.5
+            crates['fc1'] = crates['fc1'] + 0.5
             acc_list.append((crates,acc))
             param = [
                 ('-first_time', False),

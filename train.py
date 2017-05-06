@@ -538,10 +538,12 @@ def main(argv = None):
             weights_new[key] = weights[key] * tf.constant(weights_mask[key], dtype=tf.float32)
 
         pred = cov_network(images, weights, biases, keep_prob)
+        test_pred = cov_network(images, weights, biases, keep_prob)
+
         cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits = pred, labels = y)
         loss_value = tf.reduce_mean(cross_entropy)
 
-        correct_prediction = tf.equal(tf.argmax(pred,1), tf.argmax(y,1))
+        correct_prediction = tf.equal(tf.argmax(test_pred,1), tf.argmax(y,1))
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 
@@ -606,9 +608,9 @@ def main(argv = None):
                                                     y: labels_test,
                                                     keep_prob: 1.0})
                         # if (np.mean(train_acc) > 0.5):
-                        if (np.mean(accuracy_list) > 0.81 and train_acc >= 0.85 and test_acc > 0.79):
-                            print("training accuracy is large, show the list: {}".format(accuracy_list))
-                            break
+                            if (np.mean(accuracy_list) > 0.81 and train_acc >= 0.85 and test_acc > 0.823):
+                                print("training accuracy is large, show the list: {}".format(accuracy_list))
+                                break
                     _ = sess.run(train_step, feed_dict = {
                                     x: batch_x,
                                     y: batch_y,
