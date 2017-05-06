@@ -30,7 +30,7 @@ retrain_cnt = 0
 roundrobin = 0
 parent_dir = './assets/'
 # Prune
-while (crates['fc1'] < 2.):
+while (crates['fc1'] <= 2.):
     count = 0
     model_tag = 0
     iter_cnt = 0
@@ -111,6 +111,3 @@ while (crates['fc1'] < 2.):
 
 print('accuracy summary: {}'.format(acc_list))
 # acc_list = [0.82349998, 0.8233, 0.82319999, 0.81870002, 0.82050002, 0.80400002, 0.74940002, 0.66060001, 0.5011]
-with open("acc_cifar.txt", "w") as f:
-    for item in acc_list:
-        f.write("{} {} {}\n".format(item[0],item[1],item[2]))

@@ -572,7 +572,7 @@ def main(argv = None):
             sess.run(init)
 
             print('pre train pruning info')
-            prune_info(weights, 0)
+            prune_info(weights_new, 0)
             print(78*'-')
             start = time.time()
             if TRAIN == 1:
@@ -595,8 +595,8 @@ def main(argv = None):
                             cross_en
                         ))
                         # accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:49]))
-                        # accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:19]))
-                        accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:4]))
+                        accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:19]))
+                        # accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:4]))
                         if (i%(DISPLAY_FREQ*50) == 0 and i != 0 ):
                             train_acc_list.append(train_acc)
                             file_name_part = compute_file_name(cRates)
@@ -605,6 +605,7 @@ def main(argv = None):
                             print("saved the network")
                         if (np.mean(accuracy_list) > 0.81 and train_acc >= 0.82):
                             print(accuracy_list)
+                            accuracy_list = np.zeros(20)
                             test_acc = sess.run(accuracy, feed_dict = {
                                                     x: images_test,
                                                     y: labels_test,
