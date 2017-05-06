@@ -538,7 +538,7 @@ def main(argv = None):
             weights_new[key] = weights[key] * tf.constant(weights_mask[key], dtype=tf.float32)
 
         pred = cov_network(images, weights, biases, keep_prob)
-        test_pred = cov_network(images, weights, biases, keep_prob)
+        test_pred = cov_network(x, weights, biases, keep_prob)
 
         cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits = pred, labels = y)
         loss_value = tf.reduce_mean(cross_entropy)
