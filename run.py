@@ -21,7 +21,7 @@ lr = 1e-4
 crates = {
     'cov1': 0.,
     'cov2': 0.,
-    'fc1': 0.,
+    'fc1': 2.,
     'fc2': 0.,
     'fc3': 0.
 }
@@ -30,7 +30,7 @@ retrain_cnt = 0
 roundrobin = 0
 parent_dir = './assets/'
 # Prune
-while (crates['fc1'] <= 2.):
+while (crates['fc1'] <= 3.):
     count = 0
     model_tag = 0
     iter_cnt = 0
@@ -47,10 +47,10 @@ while (crates['fc1'] <= 2.):
         _ = train.main(param)
 
         # pruning saves the new models, masks
-        while (retrain < 10):
-            if (retrain > 5 and retrain < 8):
+        while (retrain < 4):
+            if (retrain == 2):
                 lr = 5e-5
-            elif (retrain >= 8):
+            elif (retrain == 3):
                 lr = 1e-5
             else:
                 lr = 1e-4
@@ -87,7 +87,7 @@ while (crates['fc1'] <= 2.):
         if (acc > 0.823 or iter_cnt == 7):
             file_name = compute_file_name(crates)
             # crates['cov2'] = crates['cov2'] + 0.5
-            crates['fc1'] = crates['fc1'] + 0.5
+            crates['fc1'] = crates['fc1'] + 0.2
             acc_list.append((crates,acc))
             param = [
                 ('-first_time', False),
