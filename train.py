@@ -602,8 +602,7 @@ def main(argv = None):
                             file_name = 'weight_crate'+ str(file_name_part)+'.pkl'
                             save_pkl_model(weights, biases, parent_dir, file_name)
                             print("saved the network")
-                        # if (np.mean(accuracy_list) > 0.81 and train_acc >= 0.82):
-                        if (train_acc >= 0.82):
+                        if (np.mean(accuracy_list) > 0.81 and train_acc >= 0.82):
                             test_acc = sess.run(accuracy, feed_dict = {
                                                     x: images_test,
                                                     y: labels_test,
