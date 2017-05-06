@@ -594,8 +594,8 @@ def main(argv = None):
                             cross_en
                         ))
                         # accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:49]))
-                        accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:19]))
-                        # accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:4]))
+                        # accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:19]))
+                        accuracy_list = np.concatenate((np.array([train_acc]),accuracy_list[0:4]))
                         if (i%(DISPLAY_FREQ*50) == 0 and i != 0 ):
                             train_acc_list.append(train_acc)
                             file_name_part = compute_file_name(cRates)
@@ -603,10 +603,12 @@ def main(argv = None):
                             save_pkl_model(weights, biases, parent_dir, file_name)
                             print("saved the network")
                         if (np.mean(accuracy_list) > 0.81 and train_acc >= 0.82):
+                            print(accuracy_list)
                             test_acc = sess.run(accuracy, feed_dict = {
                                                     x: images_test,
                                                     y: labels_test,
                                                     keep_prob: 1.0})
+                            print(test_acc)
                         # if (np.mean(train_acc) > 0.5):
                             # if (np.mean(accuracy_list) > 0.81 and train_acc >= 0.82 and test_acc > 0.823):
                             if (test_acc > 0.823):
