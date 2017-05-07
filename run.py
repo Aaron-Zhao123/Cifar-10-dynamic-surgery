@@ -20,9 +20,9 @@ parent_dir = 'assets/'
 lr = 1e-4
 crates = {
     'cov1': 0.,
-    'cov2': 1.5,
+    'cov2': 1.8,
     'fc1': 2.1,
-    'fc2': 1.5,
+    'fc2': 1.8,
     'fc3': 0.
 }
 iter_cnt = 1
@@ -86,8 +86,8 @@ while (crates['fc2'] < 2.):
                 retrain = retrain + 1
         if (acc > 0.823 or iter_cnt == 7):
             file_name = compute_file_name(crates)
-            crates['cov2'] = crates['cov2'] + 0.1
-            crates['fc2'] = crates['fc2'] + 0.1
+            crates['cov1'] = crates['cov1'] + 0.2
+            crates['fc3'] = crates['fc3'] + 0.2
             # crates['fc1'] = crates['fc1'] + 0.2
             acc_list.append((crates,acc))
             param = [
