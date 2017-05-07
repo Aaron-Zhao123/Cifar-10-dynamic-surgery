@@ -30,7 +30,7 @@ retrain_cnt = 0
 roundrobin = 0
 parent_dir = './assets/'
 # Prune
-while (crates['fc2'] < 2.):
+while (crates['fc3'] < 1.5):
     count = 0
     model_tag = 0
     iter_cnt = 0
