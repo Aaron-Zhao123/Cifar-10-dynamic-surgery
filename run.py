@@ -20,9 +20,9 @@ parent_dir = 'assets/'
 lr = 1e-4
 crates = {
     'cov1': 0.,
-    'cov2': 1.,
+    'cov2': 1.5,
     'fc1': 2.1,
-    'fc2': 1.,
+    'fc2': 1.5,
     'fc3': 0.
 }
 iter_cnt = 1
@@ -30,7 +30,7 @@ retrain_cnt = 0
 roundrobin = 0
 parent_dir = './assets/'
 # Prune
-while (crates['fc2'] < 1.5):
+while (crates['fc2'] < 2.):
     count = 0
     model_tag = 0
     iter_cnt = 0
