@@ -20,9 +20,9 @@ parent_dir = 'assets/'
 lr = 1e-4
 crates = {
     'cov1': 0.,
-    'cov2': 1.8,
+    'cov2': 1.6,
     'fc1': 2.1,
-    'fc2': 1.8,
+    'fc2': 1.6,
     'fc3': 0.
 }
 iter_cnt = 1
